@@ -2,13 +2,13 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <title>IFE JavaScript Task 04</title>
+        <title>IFE JavaScript Task 05</title>
     </head>
     <style>
-    a {
-        border-style: solid;
-        border-color: #909090; 
-    }
+        a {
+            border-style: solid;
+            border-color: #909090; 
+        }
     </style>
     <body>
         <div id='div-display'></div>
@@ -18,6 +18,8 @@
             <button id='r-insert'>右侧入</button>
             <button id='l-delete'>左侧出</button>
             <button id='r-delete'>右侧出</button>
+            <br>
+            <button id='sort'>冒泡排序</button>
         </div>
     </body>
     <script>
@@ -76,11 +78,67 @@
             }
         }
 
+        function sleep(numberMillis) {
+            var now = new Date();
+            var exitTime = now.getTime() + numberMillis;
+            while (true) {
+                now = new Date();
+                if (now.getTime() > exitTime)
+                    return true;
+            }
+        }
+
+        function swap(array, n){
+            var tmp = array[n].innerHTML;
+            array[n].innerHTML = array[n + 1].innerHTML;
+            array[n + 1].innerHTML = tmp;
+
+        }
+
+        function _swap(_array, _n){
+            return function(){
+                swap(_array, _n);
+            }
+        }
+
+        var time = 0;//设置全局时钟，解决异步无法阻塞的问题
+
+        function bubbleSort(){
+            var display = document.querySelector('#div-display');
+            var nodeList = display.children;
+            if(nodeList.length > 1){
+                for(var i = 1; i < nodeList.length; i++){
+                    for(var j = 0; j < nodeList.length - i; j++){
+                        if(parseInt(nodeList[j].innerHTML) < parseInt(nodeList[j + 1].innerHTML)){
+                            // if(sleep(1000)){
+                            //     var tmp = nodeList[j].innerHTML;
+                            //     nodeList[j].innerHTML = nodeList[j + 1].innerHTML;
+                            //     nodeList[j + 1].innerHTML = tmp;
+                            // }
+                            // setTimeout(function(){
+                            //     var tmp = nodeList[j].innerHTML;
+                            //     nodeList[j].innerHTML = nodeList[j + 1].innerHTML;
+                            //     nodeList[j + 1].innerHTML = tmp;
+                            // }, time += 1000);
+                            // sleep(1000);
+                            
+                            // var tmp = nodeList[j].innerHTML;
+                            // nodeList[j].innerHTML = nodeList[j + 1].innerHTML;
+                            // nodeList[j + 1].innerHTML = tmp;
+
+                            setTimeout(_swap(nodeList, j), time += 1000);//setTimeout中添加一个返回值为函数句柄的方法
+                        }
+                    }
+                }
+            }  
+        }
+
         function init(){
             document.querySelector('#l-insert').onclick = lsi;
             document.querySelector('#r-insert').onclick = rsi;
             document.querySelector('#l-delete').onclick = lsd;
             document.querySelector('#r-delete').onclick = rsd;
+            document.querySelector('#sort').onclick = bubbleSort;
         }
 
         init();
