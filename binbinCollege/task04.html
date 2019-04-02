@@ -1,0 +1,90 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>IFE JavaScript Task 04</title>
+  </head>
+  <style>
+  a { border-style: solid;
+border-color: #909090 ; }
+  </style>
+<body>
+    <div id='div-display'></div>
+    <div>
+        <input>
+        <button id='l-insert'>左侧入</button>
+        <button id='r-insert'>右侧入</button>
+        <button id='l-delete'>左侧出</button>
+        <button id='r-delete'>右侧出</button>
+    </div>
+</body>
+<script>
+    function refresh(){
+        var buttonList = document.querySelectorAll('a');
+        if(buttonList.length != 0){
+            for(var i = 0; i < buttonList.length; i++){
+                buttonList[i].onclick = function(){
+                    alert(this.innerHTML);
+                    this.parentNode.removeChild(this);
+                }
+            }
+        }
+    }
+
+    function lsi(){
+        var display = document.querySelector('#div-display');
+        var val = document.querySelector('input').value;
+        var a = document.createElement('a');
+        a.innerHTML = val;
+        if(display.children.length == 0){
+            display.appendChild(a);
+        }else{
+            var firstNode = display.firstChild;
+            display.insertBefore(a, firstNode);
+        }
+        refresh();
+    }
+
+    function rsi(){
+        var display = document.querySelector('#div-display');
+        var val = document.querySelector('input').value;
+        var a = document.createElement('a');
+        a.innerHTML = val;
+        display.appendChild(a);
+        refresh();
+    }
+
+    function lsd(){
+        var display = document.querySelector('#div-display');
+        if(display.children.length != 0){
+            var firstNode = display.firstChild;
+            var val = firstNode.innerHTML;
+            display.removeChild(firstNode);
+            alert(val);
+        }
+    }
+
+    function rsd(){
+        var display = document.querySelector('#div-display');
+        if(display.children.length != 0){
+            var lastNode = display.lastChild;
+            var val = lastNode.innerHTML;
+            display.removeChild(lastNode);
+            alert(val);
+        }
+    }
+
+    function init(){
+        var li = document.querySelector('#l-insert');
+        li.onclick = lsi;
+        var ri = document.querySelector('#r-insert');
+        ri.onclick = rsi;
+        var ld = document.querySelector('#l-delete');
+        ld.onclick = lsd;
+        var rd = document.querySelector('#r-delete');
+        rd.onclick = rsd;
+    }
+
+    init();
+</script>
+</html>
