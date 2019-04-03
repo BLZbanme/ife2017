@@ -1,0 +1,66 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>IFE JavaScript Task 06</title>
+    </head>
+    <style>
+        a {
+            border-style: solid;
+            border: 1px;
+        }
+    </style>
+    <body>
+        <div>
+            <textarea id='txt'></textarea>
+        </div>
+        <div>
+            <input id='query-input'></input>
+            <button id='query-button'>查询</button>
+            <button id='clean-button'>还原</button>
+        </div>
+    </body>
+    <script>
+
+        function query(){
+            var txtBoard = document.querySelector('#txt');
+            var div = document.createElement('div');
+            div.id = 'result';
+            div.style.margin = ['2px','0px', '0px', '2px'];
+            div.style.borderWidth = '1px';
+            div.style.borderStyle = 'solid';
+            div.style.width = txtBoard.scrollWidth;
+            div.style.height = txtBoard.scrollHeight;
+            var txt = txtBoard.value;
+            var txtArray = txt.split(',');
+            txtBoard.parentNode.appendChild(div);
+            txtBoard.style.display = "none";
+            var keyWord = document.querySelector('#query-input').value;
+            for(var i = 0; i < txtArray.length; i++){
+                var a = document.createElement('a');
+                a.innerText = txtArray[i];
+                if(txtArray[i].search(keyWord) != -1){
+                    a.style.color = 'red';  
+                }
+                div.appendChild(a);
+            }
+        }
+
+        function clean(){
+            var txtBoard = document.querySelector('#txt');
+            txtBoard.style.display = "block";
+            var div = document.querySelector('#result');
+            if(div != null){
+                div.parentNode.removeChild(div);
+            }
+            document.querySelector('#query-input').value = '';
+        }
+
+        function init(){
+            document.querySelector('#query-button').onclick = query;
+            document.querySelector('#clean-button').onclick = clean;
+        }
+
+        init();
+    </script>
+</html>

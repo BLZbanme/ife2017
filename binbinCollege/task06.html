@@ -1,0 +1,72 @@
+<!DOCTYPE>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>IFE JavaScript Task 06</title>
+    </head>
+    <style>
+        a {
+            border-style: solid;
+            border-color: #909090; 
+        }
+    </style>
+    <body>
+        <div id='queue'></div>
+        <div>
+            <textarea id='txt'></textarea>
+        </div>
+        <div>
+            <input id='query-input'></input>
+            <button id='input-button'>输入</button>
+            <button id='query-button'>查询</button>
+            <button id='clean-button'>清空</button>
+        </div>
+    </body>
+    <script>
+
+        function input(){
+            if(document.querySelector('#queue').childNodes.length != 0){
+                document.querySelector('#queue').innerHTML = '';
+            }
+            var txtBoard = document.querySelector('#txt');
+            var txt = txtBoard.value;
+            var txtArray = txt.split(/[\n\s+,，；;]/g);
+            for(var i = 0; i < txtArray.length; i++){
+                var a = document.createElement('a');
+                a.innerText = txtArray[i];
+                document.querySelector('#queue').appendChild(a);
+            }
+        }
+
+        function query(){
+            var div = document.querySelector('#queue');
+            var aList = div.childNodes;
+            for(var i = 0; i < aList.length; i++){
+                aList[i].style.color = null;  
+            }
+            var keyWord = document.querySelector('#query-input').value;
+            if(keyWord == null || keyWord == ''){
+                return;
+            }
+            for(var i = 0; i < aList.length; i++){
+                if(aList[i].innerText.search(keyWord) != -1){
+                    aList[i].style.color = 'red';  
+                }
+            }
+        }
+
+        function clean(){
+            document.querySelector('#query-input').value = '';
+            document.querySelector('#txt').value = '';
+            document.querySelector('#queue').innerHTML = '';
+        }
+
+        function init(){
+            document.querySelector('#input-button').onclick = input;
+            document.querySelector('#query-button').onclick = query;
+            document.querySelector('#clean-button').onclick = clean;
+        }
+
+        init();
+    </script>
+</html>
